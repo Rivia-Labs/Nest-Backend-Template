@@ -1,10 +1,10 @@
 import { FindAllUsersUseCase } from "@/domain/accounts/application/use-cases/find-all-users.use-case";
 import { UserEntity } from "@/domain/accounts/enterprise/entities/user-entity";
-import { Email } from "@/domain/accounts/enterprise/entities/value-object/email.vo";
+import { Email } from "@/domain/accounts/enterprise/entities/value-object/email-vo";
 import {
 	UserStatus,
 	UserStatusEnum,
-} from "@/domain/accounts/enterprise/entities/value-object/user-status.vo";
+} from "@/domain/accounts/enterprise/entities/value-object/user-status-vo";
 import { InMemoryUserRepository } from "../repositories/in-memory-user-repository";
 
 describe("FindAllUsersUseCase", () => {

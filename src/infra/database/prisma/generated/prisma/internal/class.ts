@@ -11,7 +11,7 @@
  */
 
 import * as runtime from "@prisma/client/runtime/library"
-import type * as Prisma from "./prismaNamespace.ts"
+import type * as Prisma from "./prismaNamespace"
 
 
 const config: runtime.GetPrismaClientConfig = {
@@ -22,25 +22,21 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "C:\\Users\\joaopalha\\Desktop\\template-api-nest\\src\\infra\\database\\prisma\\generated\\prisma",
+      "value": "/Users/igorabreu/Desktop/apps/labs/rivia/Nest-Backend-Template/src/infra/database/prisma/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
-      "moduleFormat": "esm",
-      "runtime": "nodejs",
-      "generatedFileExtension": "ts",
-      "importFileExtension": "ts",
       "engineType": "library"
     },
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\joaopalha\\Desktop\\template-api-nest\\src\\infra\\database\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/igorabreu/Desktop/apps/labs/rivia/Nest-Backend-Template/src/infra/database/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../..",
@@ -59,8 +55,8 @@ const config: runtime.GetPrismaClientConfig = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider               = \"prisma-client\"\n  output                 = \"./generated/prisma\"\n  generatedFileExtension = \"ts\"\n  importFileExtension    = \"ts\"\n  moduleFormat           = \"esm\"\n  runtime                = \"nodejs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique @db.VarChar(255)\n  name      String   @db.VarChar(100)\n  age       Int?\n  isActive  Boolean  @default(true) @map(\"is_active\")\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  @@map(\"users\")\n}\n",
-  "inlineSchemaHash": "f88b6d29995ba0e77ab3ee68f282a9073d9dd36f7ee8bbe94aa0652a3222f8b9",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"./generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique @db.VarChar(255)\n  name      String   @db.VarChar(100)\n  age       Int?\n  isActive  Boolean  @default(true) @map(\"is_active\")\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  @@map(\"users\")\n}\n",
+  "inlineSchemaHash": "bee67a20da6ba81384b5fd5e29c2364660757812c456b21d13e90caa3553a4f7",
   "copyEngine": true,
   "runtimeDataModel": {
     "models": {},

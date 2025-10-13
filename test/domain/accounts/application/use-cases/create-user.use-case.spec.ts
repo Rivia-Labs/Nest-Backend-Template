@@ -2,8 +2,8 @@ import { ResourceAlreadyExistsError } from "@/core/errors/resource-already-exist
 import { CreateUserUseCase } from "@/domain/accounts/application/use-cases/create-user.use-case";
 import { InvalidEmailError } from "@/domain/accounts/application/use-cases/errors/invalid-email-error";
 import { UserEntity } from "@/domain/accounts/enterprise/entities/user-entity";
-import { Email } from "@/domain/accounts/enterprise/entities/value-object/email.vo";
-import { UserStatusEnum } from "@/domain/accounts/enterprise/entities/value-object/user-status.vo";
+import { Email } from "@/domain/accounts/enterprise/entities/value-object/email-vo";
+import { UserStatusEnum } from "@/domain/accounts/enterprise/entities/value-object/user-status-vo";
 import { InMemoryUserRepository } from "../repositories/in-memory-user-repository";
 
 describe("CreateUserUseCase", () => {

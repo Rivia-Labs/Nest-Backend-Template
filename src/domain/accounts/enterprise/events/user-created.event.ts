@@ -11,7 +11,7 @@ export class UserCreatedEvent implements DomainEvent {
 		this.occurredAt = new Date();
 	}
 
-	public getAggregateId(): UniqueEntityID {
+	public getAggregateId(): UniqueEntityID<any> {
 		return this.user.id;
 	}
 }

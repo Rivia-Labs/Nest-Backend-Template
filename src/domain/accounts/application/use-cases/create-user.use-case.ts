@@ -2,8 +2,8 @@ import { Injectable, Logger } from "@nestjs/common";
 import { Either, failure, success } from "@/core/either";
 import { ResourceAlreadyExistsError } from "@/core/errors/resource-already-exists-error";
 import { UserEntity } from "../../enterprise/entities/user-entity";
-import { Email } from "../../enterprise/entities/value-object/email.vo";
-import { UserStatus, UserStatusEnum } from "../../enterprise/entities/value-object/user-status.vo";
+import { Email } from "../../enterprise/entities/value-object/email-vo";
+import { UserStatus, UserStatusEnum } from "../../enterprise/entities/value-object/user-status-vo";
 import { UserRepository } from "../repositories/user-repository";
 import { InvalidEmailError } from "./errors/invalid-email-error";
 

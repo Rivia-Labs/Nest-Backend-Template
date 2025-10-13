@@ -1,21 +1,15 @@
-import { randomUUID } from 'node:crypto';
+export abstract class UniqueEntityID<T> {
+	protected value: T;
 
-export class UniqueEntityID {
-  private value: string;
+	public toValue() {
+		return this.value;
+	}
 
-  toString() {
-    return this.value;
-  }
+	protected constructor(value?: T) {
+		this.value = value;
+	}
 
-  toValue() {
-    return this.value;
-  }
-
-  constructor(value?: string) {
-    this.value = value ?? randomUUID();
-  }
-
-  public equals(id: UniqueEntityID) {
-    return id.toValue() === this.value;
-  }
+	public equals(id: UniqueEntityID<T>): boolean {
+		return this.value === id.value;
+	}
 }

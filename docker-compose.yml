@@ -1,0 +1,10 @@
+services:
+  postgres:
+    container_name: template-db
+    image: postgres:17
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_DB=template
+      - POSTGRES_PASSWORD=docker

@@ -1,7 +1,7 @@
 import {
 	UserStatus,
 	UserStatusEnum,
-} from "@/domain/accounts/enterprise/entities/value-object/user-status.vo";
+} from "@/domain/accounts/enterprise/entities/value-object/user-status-vo";
 
 describe("VO UserStatus", () => {
 	it("should create an active user status", () => {
