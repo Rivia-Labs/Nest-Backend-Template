@@ -1,11 +1,11 @@
 export abstract class DomainError extends Error {
-  public readonly code: string;
+	public readonly code: string;
 
-  constructor(message: string, code: string) {
-    super(message);
+	constructor(message: string, code: string) {
+		super(message);
 
-    this.code = code;
+		this.code = code;
 
-    Error.captureStackTrace?.(this, this.constructor);
-  }
+		Error.captureStackTrace?.(this, this.constructor);
+	}
 }
