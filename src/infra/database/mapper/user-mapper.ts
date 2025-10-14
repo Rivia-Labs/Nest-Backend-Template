@@ -1,4 +1,3 @@
-import { UUIDUniqueEntityId } from "@/core/entities/id/uuid-unique-entity-id";
 import { UserEntity } from "@/domain/accounts/enterprise/entities/user-entity";
 import { Email } from "@/domain/accounts/enterprise/entities/value-object/email-vo";
 import { UserStatus } from "@/domain/accounts/enterprise/entities/value-object/user-status-vo";
@@ -24,7 +23,7 @@ export class UserMapper {
 				createdAt: data.createdAt,
 				updatedAt: data.updatedAt,
 			},
-			new UUIDUniqueEntityId(data.id)
+			data.id
 		);
 	}
 

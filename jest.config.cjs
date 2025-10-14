@@ -19,8 +19,12 @@ module.exports ={
     '!src/**/*.dto.ts',
     '!src/**/*.types.ts',
     '!src/**/*.entity.ts',
-    '!src/**/*.vo.ts',
+    '!src/**/*-vo.ts',
+    '!src/**/*-error.ts',
+    '!src/**/*-code.ts',
     '!src/main.ts',
+    '!src/infra/database/prisma/generated/**',
+    '!src/infra/configs/env/**'
   ],
   coverageDirectory: './coverage',
   testEnvironment: 'node',

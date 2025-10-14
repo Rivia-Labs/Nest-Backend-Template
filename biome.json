@@ -23,7 +23,8 @@
       "complexity": {
         "noStaticOnlyClass": "off",
         "noThisInStatic": "off",
-        "useLiteralKeys": "off"
+        "useLiteralKeys": "off",
+        "noUselessConstructor": "off"
       },
       "suspicious": {
         "noExplicitAny": "off",

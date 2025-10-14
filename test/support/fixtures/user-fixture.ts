@@ -1,10 +1,10 @@
 import { faker } from "@faker-js/faker";
 import { UserEntity } from "@/domain/accounts/enterprise/entities/user-entity";
-import { Email } from "@/domain/accounts/enterprise/entities/value-object/email.vo";
+import { Email } from "@/domain/accounts/enterprise/entities/value-object/email-vo";
 import {
 	UserStatus,
 	UserStatusEnum,
-} from "@/domain/accounts/enterprise/entities/value-object/user-status.vo";
+} from "@/domain/accounts/enterprise/entities/value-object/user-status-vo";
 
 interface UserFixtureProps {
 	name: string;
