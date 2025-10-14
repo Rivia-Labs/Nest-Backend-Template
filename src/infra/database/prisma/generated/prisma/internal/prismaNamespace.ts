@@ -388,7 +388,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Audit: 'Audit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user"
+    modelProps: "user" | "audit"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -482,6 +483,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Audit: {
+      payload: Prisma.$AuditPayload<ExtArgs>
+      fields: Prisma.AuditFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AuditFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AuditFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        findFirst: {
+          args: Prisma.AuditFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AuditFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        findMany: {
+          args: Prisma.AuditFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>[]
+        }
+        create: {
+          args: Prisma.AuditCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        createMany: {
+          args: Prisma.AuditCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AuditCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>[]
+        }
+        delete: {
+          args: Prisma.AuditDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        update: {
+          args: Prisma.AuditUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        deleteMany: {
+          args: Prisma.AuditDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AuditUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AuditUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>[]
+        }
+        upsert: {
+          args: Prisma.AuditUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        aggregate: {
+          args: Prisma.AuditAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAudit>
+        }
+        groupBy: {
+          args: Prisma.AuditGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuditGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AuditCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuditCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -532,6 +607,17 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AuditScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuditScalarFieldEnum = (typeof AuditScalarFieldEnum)[keyof typeof AuditScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -714,6 +800,7 @@ export interface PrismaClientOptions {
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  audit?: Prisma.AuditOmit
 }
 
 /* Types for Logging */

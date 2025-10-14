@@ -1,9 +1,9 @@
 import { AggregateRoot } from "@/core/entities/aggregate-root";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { UUIDUniqueEntityId } from "@/core/entities/id/uuid-unique-entity-id";
 import { DomainEvent } from "@/core/events/domain-event";
 import { DomainEvents } from "@/core/events/domain-events";
 
-class CustomDomainEvent implements DomainEvent {
+class CustomDomainEvent implements DomainEvent<UUIDUniqueEntityId> {
 	public occurredAt: Date;
 	private aggregate: CustomAggregate;
 
@@ -12,31 +12,31 @@ class CustomDomainEvent implements DomainEvent {
 		this.occurredAt = new Date();
 	}
 
-	public getAggregateId(): UniqueEntityID {
+	public getAggregateId(): UUIDUniqueEntityId {
 		return this.aggregate.id;
 	}
 }
 
-class AnotherDomainEvent implements DomainEvent {
+class AnotherDomainEvent implements DomainEvent<UUIDUniqueEntityId> {
 	public occurredAt: Date;
 	constructor(public aggregate: CustomAggregate) {
 		this.occurredAt = new Date();
 	}
 
-	public getAggregateId(): UniqueEntityID {
+	public getAggregateId(): UUIDUniqueEntityId {
 		return this.aggregate.id;
 	}
 }
 
-class CustomAggregate extends AggregateRoot<null> {
+class CustomAggregate extends AggregateRoot<null, UUIDUniqueEntityId> {
 	static create() {
-		const aggregate = new CustomAggregate(null);
+		const aggregate = new CustomAggregate(null, new UUIDUniqueEntityId());
 		aggregate.addDomainEvent(new CustomDomainEvent(aggregate));
 		return aggregate;
 	}
 
 	static createWithAnotherEvent() {
-		const aggregate = new CustomAggregate(null);
+		const aggregate = new CustomAggregate(null, new UUIDUniqueEntityId());
 		aggregate.addDomainEvent(new AnotherDomainEvent(aggregate));
 		return aggregate;
 	}
@@ -55,7 +55,6 @@ describe("Domain Events Unit Tests", () => {
 		DomainEvents.register(callbackSpy, CustomDomainEvent.name);
 
 		const aggregate = CustomAggregate.create();
-
 		expect(aggregate.domainEvents).toHaveLength(1);
 
 		DomainEvents.dispatchEventsForAggregate(aggregate.id);

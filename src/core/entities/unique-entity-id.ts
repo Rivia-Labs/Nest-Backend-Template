@@ -1,11 +1,11 @@
-export abstract class UniqueEntityID<T> {
+export abstract class UniqueEntityID<T = string | number> {
 	protected value: T;
 
 	public toValue() {
 		return this.value;
 	}
 
-	protected constructor(value?: T) {
+	public constructor(value?: T) {
 		this.value = value;
 	}
 

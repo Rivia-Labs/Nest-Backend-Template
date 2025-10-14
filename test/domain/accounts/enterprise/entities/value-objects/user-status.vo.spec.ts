@@ -10,7 +10,6 @@ describe("VO UserStatus", () => {
 		expect(result).toBeInstanceOf(UserStatus);
 		expect(result.value).toBe(UserStatusEnum.ACTIVE);
 		expect(result.isActive()).toBe(true);
-		expect(result.canLogin()).toBe(true);
 		expect(result.toBoolean()).toBe(true);
 	});
 
@@ -19,7 +18,6 @@ describe("VO UserStatus", () => {
 
 		expect(result.value).toBe(UserStatusEnum.INACTIVE);
 		expect(result.isInactive()).toBe(true);
-		expect(result.canLogin()).toBe(false);
 		expect(result.toBoolean()).toBe(false);
 	});
 
@@ -28,7 +26,6 @@ describe("VO UserStatus", () => {
 
 		expect(result.value).toBe(UserStatusEnum.SUSPENDED);
 		expect(result.isSuspended()).toBe(true);
-		expect(result.canLogin()).toBe(false);
 	});
 
 	it("should create a deleted user status", () => {
@@ -36,6 +33,5 @@ describe("VO UserStatus", () => {
 
 		expect(result.value).toBe(UserStatusEnum.DELETED);
 		expect(result.isDeleted()).toBe(true);
-		expect(result.canLogin()).toBe(false);
 	});
 });

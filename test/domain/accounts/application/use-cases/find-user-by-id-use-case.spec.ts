@@ -35,7 +35,7 @@ describe("FindUserByIdUseCase", () => {
 
 		await repository.create(user);
 
-		const result = await sut.execute({ id: user.id.toString() });
+		const result = await sut.execute({ id: user.id.toValue() });
 
 		expect(result.success()).toBe(true);
 		expect(result.value).toBeInstanceOf(UserEntity);

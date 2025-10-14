@@ -13,13 +13,13 @@ export type UserProps = {
 	updatedAt?: Date;
 };
 
-export class UserEntity extends AggregateRoot<UserProps, string> {
-	static create(props: UserProps, id?: UUIDUniqueEntityId) {
+export class UserEntity extends AggregateRoot<UserProps, UUIDUniqueEntityId> {
+	static create(props: UserProps, id?: string) {
 		const user = new UserEntity(
 			{
 				...props,
 			},
-			id
+			new UUIDUniqueEntityId(id)
 		);
 
 		const isNew = !id;

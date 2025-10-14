@@ -6,9 +6,11 @@ type DomainEventCallback = (event: any) => void;
 
 export class DomainEvents {
 	private static handlersMap: Record<string, DomainEventCallback[]> = {};
-	private static markedAggregates: AggregateRoot<any, any>[] = [];
+	private static markedAggregates: AggregateRoot<unknown, UniqueEntityID<string | number>>[] = [];
 
-	public static markAggregateForDispatch(aggregate: AggregateRoot<any, any>) {
+	public static markAggregateForDispatch<PROPS, ID extends UniqueEntityID<string | number>>(
+		aggregate: AggregateRoot<PROPS, ID>
+	) {
 		const aggregateFound = !!this.findMarkedAggregateByID(aggregate.id);
 
 		if (!aggregateFound) {
@@ -16,8 +18,10 @@ export class DomainEvents {
 		}
 	}
 
-	private static dispatchAggregateEvents(aggregate: AggregateRoot<any, any>) {
-		aggregate.domainEvents.forEach((event: DomainEvent) => this.dispatch(event));
+	private static dispatchAggregateEvents<PROPS, ID extends UniqueEntityID<string | number>>(
+		aggregate: AggregateRoot<PROPS, ID>
+	) {
+		aggregate.domainEvents.forEach((event: DomainEvent<ID>) => this.dispatch(event));
 	}
 
 	private static removeAggregateFromMarkedDispatchList(aggregate: AggregateRoot<any, any>) {
@@ -27,12 +31,12 @@ export class DomainEvents {
 	}
 
 	private static findMarkedAggregateByID(
-		id: UniqueEntityID<any>
-	): AggregateRoot<any, any> | undefined {
+		id: UniqueEntityID<string | number>
+	): AggregateRoot<any, UniqueEntityID<string | number>> | undefined {
 		return this.markedAggregates.find(aggregate => aggregate.id.equals(id));
 	}
 
-	public static dispatchEventsForAggregate(id: UniqueEntityID<any>) {
+	public static dispatchEventsForAggregate(id: UniqueEntityID<string | number>) {
 		const aggregate = this.findMarkedAggregateByID(id);
 
 		if (aggregate) {
@@ -60,7 +64,7 @@ export class DomainEvents {
 		this.markedAggregates = [];
 	}
 
-	private static dispatch(event: DomainEvent) {
+	private static dispatch<ID>(event: DomainEvent<ID>) {
 		const eventClassName: string = event.constructor.name;
 
 		const isEventRegistered = eventClassName in this.handlersMap;

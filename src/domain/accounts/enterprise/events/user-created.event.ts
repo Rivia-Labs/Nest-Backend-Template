@@ -1,8 +1,8 @@
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { UUIDUniqueEntityId } from "@/core/entities/id/uuid-unique-entity-id";
 import { DomainEvent } from "@/core/events/domain-event";
 import { UserEntity } from "../entities/user-entity";
 
-export class UserCreatedEvent implements DomainEvent {
+export class UserCreatedEvent implements DomainEvent<UUIDUniqueEntityId> {
 	public occurredAt: Date;
 	public user: UserEntity;
 
@@ -11,7 +11,7 @@ export class UserCreatedEvent implements DomainEvent {
 		this.occurredAt = new Date();
 	}
 
-	public getAggregateId(): UniqueEntityID<any> {
+	public getAggregateId(): UUIDUniqueEntityId {
 		return this.user.id;
 	}
 }
