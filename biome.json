@@ -43,6 +43,9 @@
       "trailingCommas": "es5",
       "quoteStyle": "double",
       "semicolons": "always"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
     }
   },
   "json": {

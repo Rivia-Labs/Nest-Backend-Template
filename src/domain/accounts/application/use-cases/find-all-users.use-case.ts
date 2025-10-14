@@ -15,7 +15,6 @@ export class FindAllUsersUseCase {
 		this.logger.log("Finding all users");
 		const users = await this.userRepository.findAll();
 		this.logger.log(`Found ${users.length} users`);
-
 		return success(users);
 	}
 }

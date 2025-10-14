@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { envSchema } from "./infra/configs/env";
 import { EnvModule } from "./infra/configs/env/env.module";
-import { DatabaseModule } from "./infra/database/database.module";
+import { HttpModule } from "./infra/http/http.module";
 
 @Module({
 	imports: [
@@ -10,10 +10,8 @@ import { DatabaseModule } from "./infra/database/database.module";
 			validate: env => envSchema.parse(env),
 			isGlobal: true,
 		}),
-		DatabaseModule,
+		HttpModule,
 		EnvModule,
 	],
-	controllers: [],
-	providers: [],
 })
 export class AppModule {}

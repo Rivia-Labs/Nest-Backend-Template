@@ -1,5 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { UUIDUniqueEntityId } from "@/core/entities/id/uuid-unique-entity-id";
+import { DomainEvents } from "@/core/events/domain-events";
 import { UserRepository } from "@/domain/accounts/application/repositories/user-repository";
 import { UserEntity } from "@/domain/accounts/enterprise/entities/user-entity";
 import { Email } from "@/domain/accounts/enterprise/entities/value-object/email-vo";
@@ -54,6 +55,9 @@ export class UserRepositoryAdapter implements UserRepository {
 		await this.prisma.user.create({
 			data: userPersistanceData,
 		});
+
+		this.logger.log(`User with ID: ${user.id.toValue()} created successfully`);
+		DomainEvents.dispatchEventsForAggregate(user.id);
 	}
 
 	public async update(user: UserEntity): Promise<void> {
