@@ -1,15 +1,15 @@
 import { UniqueEntityID } from "./unique-entity-id";
 
-export abstract class EntityBase<T> {
-	private _id: UniqueEntityID;
+export abstract class EntityBase<T, ID> {
+	private _id: UniqueEntityID<ID>;
 	protected _props: T;
 
-	protected constructor(props: T, id?: UniqueEntityID) {
-		this._id = id ?? new UniqueEntityID();
+	protected constructor(props: T, id?: UniqueEntityID<ID>) {
+		this._id = id;
 		this._props = props;
 	}
 
-	public get id(): UniqueEntityID {
+	public get id(): UniqueEntityID<ID> {
 		return this._id;
 	}
 
@@ -17,7 +17,7 @@ export abstract class EntityBase<T> {
 		return this._props;
 	}
 
-	public equals(entity: EntityBase<any>): boolean {
+	public equals(entity: EntityBase<any, any>): boolean {
 		if (entity === this) {
 			return true;
 		}

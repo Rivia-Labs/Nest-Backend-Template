@@ -7,10 +7,11 @@ import { DatabaseModule } from "./infra/database/database.module";
 @Module({
 	imports: [
 		ConfigModule.forRoot({
-			validate: (env: Record<string, unknown>) => envSchema.parse(env),
+			validate: env => envSchema.parse(env),
+			isGlobal: true,
 		}),
-		EnvModule,
 		DatabaseModule,
+		EnvModule,
 	],
 	controllers: [],
 	providers: [],

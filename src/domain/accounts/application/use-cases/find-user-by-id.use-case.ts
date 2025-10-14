@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { Either, failure, success } from "@/core/either";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { UUIDUniqueEntityId } from "@/core/entities/id/uuid-unique-entity-id";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 import { UserEntity } from "../../enterprise/entities/user-entity";
 import { UserRepository } from "../repositories/user-repository";
@@ -19,7 +19,7 @@ export class FindUserByIdUseCase {
 
 	public async execute(data: FindUserByIdRequest): Promise<FindUserByIdResponse> {
 		this.logger.log(`Finding user with ID: ${data.id}`);
-		const id = new UniqueEntityID(data.id);
+		const id = new UUIDUniqueEntityId(data.id);
 
 		const userExists = await this.userRepository.findById(id);
 		if (!userExists) {

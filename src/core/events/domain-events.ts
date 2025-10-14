@@ -6,9 +6,9 @@ type DomainEventCallback = (event: any) => void;
 
 export class DomainEvents {
 	private static handlersMap: Record<string, DomainEventCallback[]> = {};
-	private static markedAggregates: AggregateRoot<any>[] = [];
+	private static markedAggregates: AggregateRoot<any, any>[] = [];
 
-	public static markAggregateForDispatch(aggregate: AggregateRoot<any>) {
+	public static markAggregateForDispatch(aggregate: AggregateRoot<any, any>) {
 		const aggregateFound = !!this.findMarkedAggregateByID(aggregate.id);
 
 		if (!aggregateFound) {
@@ -16,21 +16,23 @@ export class DomainEvents {
 		}
 	}
 
-	private static dispatchAggregateEvents(aggregate: AggregateRoot<any>) {
+	private static dispatchAggregateEvents(aggregate: AggregateRoot<any, any>) {
 		aggregate.domainEvents.forEach((event: DomainEvent) => this.dispatch(event));
 	}
 
-	private static removeAggregateFromMarkedDispatchList(aggregate: AggregateRoot<any>) {
+	private static removeAggregateFromMarkedDispatchList(aggregate: AggregateRoot<any, any>) {
 		const index = this.markedAggregates.findIndex(a => a.equals(aggregate));
 
 		this.markedAggregates.splice(index, 1);
 	}
 
-	private static findMarkedAggregateByID(id: UniqueEntityID): AggregateRoot<any> | undefined {
+	private static findMarkedAggregateByID(
+		id: UniqueEntityID<any>
+	): AggregateRoot<any, any> | undefined {
 		return this.markedAggregates.find(aggregate => aggregate.id.equals(id));
 	}
 
-	public static dispatchEventsForAggregate(id: UniqueEntityID) {
+	public static dispatchEventsForAggregate(id: UniqueEntityID<any>) {
 		const aggregate = this.findMarkedAggregateByID(id);
 
 		if (aggregate) {

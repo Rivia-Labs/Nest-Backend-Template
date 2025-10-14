@@ -1,5 +1,5 @@
 import { InvalidEmailError } from "@/domain/accounts/application/use-cases/errors/invalid-email-error";
-import { Email } from "@/domain/accounts/enterprise/entities/value-object/email.vo";
+import { Email } from "@/domain/accounts/enterprise/entities/value-object/email-vo";
 
 describe("VO Email", () => {
 	it("should receive error when email is empty", () => {

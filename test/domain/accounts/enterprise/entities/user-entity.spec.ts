@@ -1,10 +1,10 @@
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { UserEntity, type UserProps } from "@/domain/accounts/enterprise/entities/user-entity";
-import { Email } from "@/domain/accounts/enterprise/entities/value-object/email.vo";
+import { Email } from "@/domain/accounts/enterprise/entities/value-object/email-vo";
 import {
 	UserStatus,
 	UserStatusEnum,
-} from "@/domain/accounts/enterprise/entities/value-object/user-status.vo";
+} from "@/domain/accounts/enterprise/entities/value-object/user-status-vo";
 
 describe("User Entity", () => {
 	const validProps: UserProps = {
