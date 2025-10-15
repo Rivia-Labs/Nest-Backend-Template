@@ -1,0 +1,30 @@
+@baseUrl = http://localhost:3000
+
+# @name create_user
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "email": "victor@rivia.com",
+  "name": "Test User",
+  "age": 25
+}
+
+###
+
+# @name get_all_users
+GET {{baseUrl}}/users
+Content-Type: application/json
+
+###
+
+# @name get_user_by_id
+GET {{baseUrl}}/users/16c27f50-1996-4529-b2f9-5f89ec49a1e1
+Content-Type: application/json
+
+###
+
+# # @name fetch_recent_questions
+# GET {{baseUrl}}/questions?page=1
+# Content-Type: application/json
+# Authorization: Bearer {{authToken}}

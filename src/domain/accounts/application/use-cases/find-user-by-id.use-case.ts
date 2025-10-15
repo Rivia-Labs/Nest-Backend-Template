@@ -20,14 +20,11 @@ export class FindUserByIdUseCase {
 	public async execute(data: FindUserByIdRequest): Promise<FindUserByIdResponse> {
 		this.logger.log(`Finding user with ID: ${data.id}`);
 		const id = new UUIDUniqueEntityId(data.id);
-
 		const userExists = await this.userRepository.findById(id);
 		if (!userExists) {
 			this.logger.warn(`User with ID: ${data.id} not found`);
 			return failure(new ResourceNotFoundError("Usuário"));
 		}
-
-		this.logger.log(`User with ID: ${data.id} found`);
 		return success(userExists);
 	}
 }
