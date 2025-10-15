@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { Either } from "@/core/either";
+import { Either, Failure } from "@/core/either";
 import { ResourceAlreadyExistsError } from "@/core/errors/resource-already-exists-error";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 
@@ -17,9 +17,8 @@ import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 export class EitherInterceptor implements NestInterceptor {
 	intercept(_context: ExecutionContext, next: CallHandler): Observable<any> {
 		return next.handle().pipe(
-			map((result: Either<Error, unknown>) => {
-				if (!result) return result;
-				if (result.failure()) {
+			map((result: Either<Error, unknown> | any) => {
+				if (result instanceof Failure && result.failure()) {
 					const error = result.value;
 					// Mapeamento centralizado de erros → exceções HTTP
 					if (error instanceof ResourceNotFoundError) {
@@ -33,7 +32,7 @@ export class EitherInterceptor implements NestInterceptor {
 					// fallback genérico
 					throw new InternalServerErrorException(error.message || "Unexpected error occurred");
 				}
-				return result.value;
+				return result;
 			})
 		);
 	}
