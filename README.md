@@ -1,98 +1,201 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# NestJS Template
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 1. Objetivo
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Esta documentação tem como objetivo propor um **padrão oficial de estrutura e arquitetura** para todos os projetos backend desenvolvidos pela empresa utilizando **NestJS e TypeScript**.
+A proposta visa garantir **uniformidade, escalabilidade, legibilidade e facilidade de manutenção** em todos os projetos, independentemente do tamanho ou do time envolvido.
 
-## Description
+O padrão é baseado no **Template API Nest**, desenvolvido com foco em **boas práticas de engenharia de software**, **princípios arquiteturais sólidos** e **adoção de ferramentas modernas** para desenvolvimento, testes e entrega contínua.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 2. Visão Geral
 
-```bash
-$ pnpm install
+O **Template API Nest** fornece uma base arquitetural robusta que combina os conceitos de **Domain-Driven Design (DDD)**, **Event-Driven Architecture** e **Clean Architecture**, aliados ao ecossistema do **NestJS**.
+O projeto busca equilibrar **simplicidade inicial** com **evolutividade a longo prazo**, permitindo que aplicações cresçam de forma organizada e sustentável.
+
+Essa estrutura foi desenhada com o propósito de:
+
+- Padronizar a forma como APIs são iniciadas e estruturadas;
+- Facilitar a integração entre times e projetos;
+- Garantir testabilidade e isolamento das regras de negócio;
+- Promover práticas de engenharia consistentes e de alta qualidade.
+
+---
+
+## 3. Tecnologias e Ferramentas Padronizadas
+
+| Categoria              | Ferramenta               | Finalidade                                                     |
+| ---------------------- | ------------------------ | -------------------------------------------------------------- |
+| Framework Backend      | **NestJS**               | Estrutura modular e escalável para desenvolvimento de APIs.    |
+| Linguagem              | **TypeScript**           | Tipagem estática e maior segurança no desenvolvimento.         |
+| ORM                    | **Prisma ORM**           | Mapeamento e acesso simplificado ao banco de dados.            |
+| Testes                 | **Jest/Test Containers** | Framework de testes automatizados e containers para testes.    |
+| Documentação           | **Swagger** / **Scalar** | Geração automática e visual de documentação das APIs.          |
+| Padronização de Código | **Biome**                | Linter e formatter integrados.                                 |
+| Containerização        | **Docker**               | Ambiente isolado e replicável para desenvolvimento e produção. |
+| Teste de Rotas         | **REST Client (VSCode)** | Validação e simulação de endpoints localmente.                 |
+
+Essas ferramentas foram selecionadas por sua ampla adoção, maturidade no mercado e integração fluida com o ecossistema NestJS.
+
+---
+
+## 4. Arquitetura Proposta
+
+A arquitetura é organizada em **três grandes camadas**, separadas por responsabilidades e alinhadas aos princípios do DDD e da Clean Architecture:
+
+```
+src/
+├── core/
+│   ├── entities/
+│   ├── errors/
+│   ├── events/
+│   ├── type/
+│   └── either.ts
+├── domain/
+│   └── <contexto_de_negocio>/
+│       ├── application/
+│       │   ├── repositories/
+│       │   ├── subscribers/
+│       │   └── use-cases/
+│       │       └── errors/
+│       └── enterprise/
+│           ├── entities/
+│           └── events/
+└── infra/
+    ├── http/
+    ├── configs/
+    ├── events/
+    └── database/
 ```
 
-## Compile and run the project
+### Descrição das Camadas
 
-```bash
-# development
-$ pnpm run start
+#### **Core Layer**
 
-# watch mode
-$ pnpm run start:dev
+Camada fundamental que contém abstrações e componentes genéricos compartilhados entre todos os domínios:
 
-# production mode
-$ pnpm run start:prod
+- **Entities**: Entidades base e agregados reutilizáveis.
+- **Errors**: Tipos de erro genéricos e customizáveis.
+- **Events**: Infraestrutura para manipulação de eventos de domínio.
+- **Either.ts**: Implementação de `Either` para controle funcional de erros.
+- **Type/**: Tipagens utilitárias e interfaces compartilhadas.
+
+#### **Domain Layer**
+
+Camada de negócio, totalmente isolada da infraestrutura.
+Divide-se em módulos de contexto (ex: `accounts`, `contracts`, `fiscaliza`), cada um com:
+
+- **Enterprise**: Entidades e eventos do domínio.
+- **Application**: Casos de uso, repositórios e adaptadores para a camada de domínio.
+
+#### **Infra Layer**
+
+Camada que conecta a aplicação ao mundo externo:
+
+- **HTTP**: Controladores e interceptors de rotas.
+- **Configs**: Configurações globais (CORS, envs, logs, etc.).
+- **Events**: Implementações concretas de eventos e filas.
+- **Database**: Integração com Prisma ORM e configurações de persistência.
+
+---
+
+## 5. Padrões e Princípios Adotados
+
+| Princípio / Padrão                | Descrição                                                                             |
+| --------------------------------- | ------------------------------------------------------------------------------------- |
+| **DDD (Domain-Driven Design)**    | Estruturação do domínio para refletir a linguagem do negócio.                         |
+| **Event-Driven Architecture**     | Comunicação desacoplada via eventos, facilitando integração futura com microserviços. |
+| **Repository Pattern**            | Abstração do acesso a dados, promovendo testabilidade e flexibilidade.                |
+| **SOLID Principles**              | Código limpo, modular e extensível.                                                   |
+| **TDD (Test-Driven Development)** | Casos de uso e regras de negócio cobertos por testes desde o início.                  |
+| **DTOs (Data Transfer Objects)**  | Transferência de dados entre camadas com segurança e clareza.                         |
+| **Functional Error Handling**     | Uso de `Either` para controle previsível de fluxos de sucesso e falha.                |
+| **CI/CD e Docker**                | Automação de integração e deploy, além de containerização completa.                   |
+
+Esses padrões visam garantir **qualidade, clareza e extensibilidade** do código em todos os projetos.
+
+```mmd
+sequenceDiagram
+    title Comunicação entre camadas na arquitetura do Template API Nest
+
+    participant Client as 🧑‍💻 Cliente / Frontend
+    participant Controller as 🌐 Controller (Infra / HTTP)
+    participant UseCase as ⚙️ Use Case (Application)
+    participant Repository as 🗃️ Repository (Application)
+    participant Entity as 🧩 Entidade (Domain / Enterprise)
+    participant Database as 🗄️ Banco de Dados (Infra / Prisma)
+
+    %% Requisição HTTP
+    Client->>Controller: 1️⃣ Envia requisição HTTP (ex: POST /accounts)
+    Controller->>Controller: 2️⃣ Valida DTO (entrada)
+    Controller->>UseCase: 3️⃣ Executa caso de uso com dados validados
+
+    %% Camada de aplicação
+    UseCase->>Repository: 4️⃣ Solicita operação (ex: criar usuário)
+    Repository->>Entity: 5️⃣ Instancia entidade de domínio (ex: UserEntity)
+    Entity-->>Repository: 6️⃣ Retorna entidade validada
+    Repository->>Database: 7️⃣ Persiste dados (via Prisma ORM)
+    Database-->>Repository: 8️⃣ Retorna resultado da operação
+    Repository-->>UseCase: 9️⃣ Retorna sucesso ou erro (Either<Error, Entity>)
+
+    %% Retorno para o cliente
+    UseCase-->>Controller: 🔟 Retorna resultado (Either)
+    Controller->>Controller: 1️⃣1️⃣ Mapeia erro para HTTP (ex: 404, 409)
+    Controller-->>Client: 1️⃣2️⃣ Retorna resposta HTTP (status + payload)
+
+    %% Evento de domínio (opcional)
+    UseCase->>Entity: ⏺️ Emite Domain Event (ex: UserCreated)
+    Entity->>EventBus: ⏭️ Publica evento (Event-Driven Architecture)
+    EventBus->>Subscriber: ⏩ Subscriber reage ao evento (ex: envia e-mail)
 ```
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ pnpm run test
+## 6. Pontos Positivos da Adoção
 
-# e2e tests
-$ pnpm run test:e2e
+✅ **Escalabilidade** – a separação de camadas e contextos permite que o sistema cresça de forma modular, sem acoplamento excessivo.
+✅ **Testabilidade** – cada caso de uso é isolado, facilitando testes unitários e integração contínua.
+✅ **Padronização** – todos os projetos compartilham a mesma estrutura e convenções, reduzindo curva de aprendizado.
+✅ **Evolutividade** – fácil adição de novos módulos, serviços e contextos de domínio.
+✅ **Clareza Arquitetural** – código mais previsível e de fácil leitura, mesmo por novos desenvolvedores.
+✅ **Aderência a Boas Práticas** – aplicação dos princípios SOLID e DDD de forma pragmática.
+✅ **Integração Simplificada com Microserviços** – devido ao uso de eventos e abstrações bem definidas.
 
-# test coverage
-$ pnpm run test:cov
-```
+---
 
-## Deployment
+## 7. Pontos de Atenção / Desafios
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+⚠️ **Curva de aprendizado inicial** – a aplicação de DDD e Clean Architecture pode ser complexa para desenvolvedores sem experiência nesses padrões.
+⚠️ **Sobrecarga para pequenos projetos** – para APIs simples, a separação de camadas pode parecer excessiva. (Recomenda-se a possibilidade de um template mais enxuto para esses casos, ex: Microservices).
+⚠️ **Necessidade de disciplina de equipe** – o padrão exige consistência na criação de módulos, casos de uso e repositórios.
+⚠️ **Custo inicial de setup** – a configuração completa de ambiente, testes e documentação demanda tempo inicial maior.
+⚠️ **Manutenção de múltiplos contextos** – exige atenção na definição de boundaries e dependências entre domínios.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+---
 
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
-```
+## 8. Recomendações para Adoção
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+1. **Utilizar o Template API Nest como ponto de partida** para todo novo projeto backend em NestJS.
+2. **Definir um mantenedor técnico** responsável por revisar PRs e garantir aderência ao padrão.
+3. **Treinar a equipe** em DDD, NestJS avançado e padrões de arquitetura limpa.
+4. **Manter documentação interna viva** (em repositório ou Wiki) com exemplos e convenções atualizadas.
+5. **Estabelecer pipelines de CI/CD** padronizados para build, testes e deploy.
+6. **Revisar o padrão semestralmente**, garantindo atualização com novas práticas e ferramentas.
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## 9. Conclusão
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+A adoção do **Template API Nest** como padrão arquitetural e estrutural para os projetos backend oferece uma base sólida, moderna e escalável para o desenvolvimento de APIs corporativas.
+Apesar da curva de aprendizado inicial, os benefícios a médio e longo prazo — em **qualidade de código**, **consistência entre projetos** e **redução de custos de manutenção** — justificam plenamente a padronização.
 
-## Support
+Esse modelo favorece o crescimento sustentável da base de código, a integração entre times e o alinhamento técnico da empresa em torno de práticas de engenharia consolidadas.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## 10. Autores e Colaboradores
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- [Victor Palha](https://github.com/Victor-Palha)
+- [Igor Abreu](https://github.com/igorabreu29)
+- [Esaú Bandeira](https://github.com/Esau-Bandeira)
