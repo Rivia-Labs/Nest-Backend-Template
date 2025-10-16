@@ -22,15 +22,18 @@ export class EitherInterceptor implements NestInterceptor {
 					const error = result.value;
 					// Mapeamento centralizado de erros → exceções HTTP
 					if (error instanceof ResourceNotFoundError) {
-						throw new NotFoundException(error.message);
+						throw new NotFoundException(error.message, error.code);
 					}
 
 					if (error instanceof ResourceAlreadyExistsError) {
-						throw new ConflictException(error.message);
+						throw new ConflictException(error.message, error.code);
 					}
 
 					// fallback genérico
-					throw new InternalServerErrorException(error.message || "Unexpected error occurred");
+					throw new InternalServerErrorException(
+						error.message || "Unexpected error occurred",
+						error.code
+					);
 				}
 				return result;
 			})

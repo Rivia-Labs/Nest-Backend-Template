@@ -4,9 +4,9 @@ import { CreateUserUseCase } from "@/domain/accounts/application/use-cases/creat
 import { FindAllUsersUseCase } from "@/domain/accounts/application/use-cases/find-all-users.use-case";
 import { FindUserByIdUseCase } from "@/domain/accounts/application/use-cases/find-user-by-id.use-case";
 import { DatabaseModule } from "../database/database.module";
-import { CreateUserController } from "./controllers/create-user.controller";
-import { FindAllUsersController } from "./controllers/find-all-users.controller";
-import { FindUserByIdController } from "./controllers/find-user-by-id.controller";
+import { CreateUserController } from "./controllers/users/create-user.controller";
+import { FindAllUsersController } from "./controllers/users/find-all-users.controller";
+import { FindUserByIdController } from "./controllers/users/find-user-by-id.controller";
 import { EitherInterceptor } from "./interceptors/either-interceptor";
 
 @Module({

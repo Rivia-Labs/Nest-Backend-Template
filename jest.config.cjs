@@ -23,9 +23,11 @@ module.exports ={
     '!src/**/*-vo.ts',
     '!src/**/*-error.ts',
     '!src/**/*-code.ts',
+    '!src/**/*-scalar.ts',
     '!src/main.ts',
     '!src/infra/database/prisma/generated/**',
-    '!src/infra/configs/env/**'
+    '!src/infra/configs/env/**',
+    '!src/infra/http/documentation/scalar-config.ts'
   ],
   coverageDirectory: './coverage',
   testEnvironment: 'node',

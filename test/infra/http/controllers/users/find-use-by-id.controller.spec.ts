@@ -1,7 +1,7 @@
 import type { INestApplication } from "@nestjs/common";
 import * as request from "supertest";
 import { PrismaClient } from "@/infra/database/prisma/generated/prisma/client";
-import { IntegrationTestHelper } from "../../../support/integration-test-helper";
+import { IntegrationTestHelper } from "../../../../support/integration-test-helper";
 
 describe("UserController (Integration)", () => {
 	let app: INestApplication;
