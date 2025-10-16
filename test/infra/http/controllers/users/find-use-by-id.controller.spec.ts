@@ -46,7 +46,7 @@ describe("UserController (Integration)", () => {
 			const response = await request(app.getHttpServer()).get(`/users/non-existing-id`).expect(404);
 			expect(response.body).toEqual({
 				message: "Usuário não encontrado!",
-				error: "Not Found",
+				error: "RESOURCE_NOT_FOUND_ERROR",
 				statusCode: 404,
 			});
 		});

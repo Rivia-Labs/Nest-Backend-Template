@@ -1,5 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { UUIDUniqueEntityId } from "@/core/entities/id/uuid-unique-entity-id";
 import { AuditRepository } from "@/domain/audit/application/repositories/audit-repository";
 import { RegisterEntity } from "@/domain/audit/enterprise/entities/register-entity";
 import { Action } from "@/domain/audit/enterprise/entities/value-object/action-vo";
@@ -13,8 +13,7 @@ export class AuditRepositoryAdapter implements AuditRepository {
 	constructor(private readonly prisma: PrismaService) {}
 
 	public async create(register: RegisterEntity): Promise<void> {
-		this.logger.log(`Creating audit register with ID: ${register.id.toValue()}`);
-
+		this.logger.log(`Creating audit log for action: ${register.props.action.value}`);
 		const data = AuditMapper.toPersistence(register);
 		await this.prisma.audit.create({
 			data: {
@@ -43,7 +42,7 @@ export class AuditRepositoryAdapter implements AuditRepository {
 		return audits.map(AuditMapper.toDomain);
 	}
 
-	public async findByUserId(userId: UniqueEntityID<string>): Promise<RegisterEntity[] | null> {
+	public async findByUserId(userId: UUIDUniqueEntityId): Promise<RegisterEntity[] | null> {
 		const audits = await this.prisma.audit.findMany({
 			where: { userId: userId.toValue() },
 		});

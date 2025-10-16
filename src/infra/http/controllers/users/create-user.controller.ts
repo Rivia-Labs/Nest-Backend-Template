@@ -1,5 +1,6 @@
 import { Body, Controller, HttpStatus, Logger, Post } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { DomainCode } from "@/core/errors/enums/domain-code";
 import { CreateUserUseCase } from "@/domain/accounts/application/use-cases/create-user.use-case";
 import { ErrorResponseScalar } from "../../documentation/error-response-scalar";
 import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
@@ -25,7 +26,7 @@ export class CreateUserController {
 		status: HttpStatus.CONFLICT,
 		description: "Dados em conflito",
 		message: "Usuário com esse email já existe",
-		error: "RESOURCE_ALREADY_EXISTS_ERROR",
+		error: DomainCode.RESOURCE_ALREADY_EXISTS_ERROR,
 	})
 	public async execute(@Body(new ZodValidationPipe(createUserBodySchema)) body: CreateUserBodyDto) {
 		this.logger.log("Received request to create a new user");

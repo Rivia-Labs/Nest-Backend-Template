@@ -62,6 +62,7 @@ export class IntegrationTestHelper {
 
 	static async cleanup(): Promise<void> {
 		if (IntegrationTestHelper.prisma) {
+			await IntegrationTestHelper.prisma.audit.deleteMany();
 			await IntegrationTestHelper.prisma.user.deleteMany();
 		}
 	}

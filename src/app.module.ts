@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { envSchema } from "./infra/configs/env";
 import { EnvModule } from "./infra/configs/env/env.module";
+import { EventsModule } from "./infra/events/events.module";
 import { HttpModule } from "./infra/http/http.module";
 
 @Module({
@@ -12,6 +13,7 @@ import { HttpModule } from "./infra/http/http.module";
 		}),
 		HttpModule,
 		EnvModule,
+		EventsModule,
 	],
 })
 export class AppModule {}

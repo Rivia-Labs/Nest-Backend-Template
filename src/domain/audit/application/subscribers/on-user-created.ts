@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import { DomainEvents } from "@/core/events/domain-events";
 import { EventHandler } from "@/core/events/event-handler";
 import { UserCreatedEvent } from "@/domain/accounts/enterprise/events/user-created.event";
@@ -5,6 +6,7 @@ import { RegisterEntity } from "../../enterprise/entities/register-entity";
 import { Action, ActionType } from "../../enterprise/entities/value-object/action-vo";
 import { AuditRepository } from "../repositories/audit-repository";
 
+@Injectable()
 export class OnUserCreated implements EventHandler {
 	private readonly auditRepository: AuditRepository;
 

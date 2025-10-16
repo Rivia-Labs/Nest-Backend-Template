@@ -1,4 +1,4 @@
-import { Logger } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { Either, failure, success } from "@/core/either";
 import { UUIDUniqueEntityId } from "@/core/entities/id/uuid-unique-entity-id";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
@@ -11,6 +11,7 @@ type FindAuditByUserIdRequest = {
 
 type FindAuditByUserIdResponse = Either<ResourceNotFoundError, RegisterEntity[]>;
 
+@Injectable()
 export class FindAuditByUserIdUseCase {
 	private readonly logger = new Logger(FindAuditByUserIdUseCase.name);
 

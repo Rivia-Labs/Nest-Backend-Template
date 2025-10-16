@@ -3,7 +3,7 @@
 /node_modules
 /build
 
-src/infra/database/prisma/generated/*
+/src/infra/database/prisma/generated
 
 # Logs
 logs

@@ -30,7 +30,7 @@ export class AuditMapper {
 
 	public static toPersistence(register: RegisterEntity) {
 		return {
-			id: register.id.toValue(),
+			id: register.id?.toValue() ?? undefined,
 			action: register.props.action.value,
 			userId: register.props.userId.toValue(),
 			createdAt: register.props.createdAt,

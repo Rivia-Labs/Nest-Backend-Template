@@ -14,7 +14,7 @@ export function createOpenAPIDocument(app: INestApplication) {
 	app.use(
 		"/docs",
 		apiReference({
-			theme: "purple",
+			theme: "bluePlanet",
 			content: document,
 		})
 	);

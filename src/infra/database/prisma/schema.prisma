@@ -28,7 +28,7 @@ model Audit {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user User @relation(fields: [userId], references: [id], onDelete: NoAction)
+  user User @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@map("audits")
 }

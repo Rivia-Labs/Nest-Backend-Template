@@ -19,7 +19,21 @@ Content-Type: application/json
 ###
 
 # @name get_user_by_id
-GET {{baseUrl}}/users/16c27f50-1996-4529-b2f9-5f89ec49a1e1
+GET {{baseUrl}}/users/2453d048-fd36-4879-8d46-9e7847070f71
+Content-Type: application/json
+
+###
+
+# @name get_all_audit
+GET {{baseUrl}}/audits
+Content-Type: application/json
+
+###
+
+###
+
+# @name get_audits_by_user_id
+GET {{baseUrl}}/audits/2453d048-fd36-4879-8d46-9e7847070f71
 Content-Type: application/json
 
 ###
