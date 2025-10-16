@@ -7,6 +7,12 @@ A proposta visa garantir **uniformidade, escalabilidade, legibilidade e facilida
 
 O padrão é baseado no **Template API Nest**, desenvolvido com foco em **boas práticas de engenharia de software**, **princípios arquiteturais sólidos** e **adoção de ferramentas modernas** para desenvolvimento, testes e entrega contínua.
 
+### Documentação Swagger/Scalar
+
+```bash
+http://localhost:3333/docs
+```
+
 ---
 
 ## 2. Visão Geral
