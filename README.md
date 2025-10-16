@@ -64,9 +64,13 @@ src/
 │           └── events/
 └── infra/
     ├── http/
+    │   └── controllers/
+    │       └── <contexto_de_negocio>/
+    │           └── dtos/
     ├── configs/
     ├── events/
     └── database/
+        └── mapper/
 ```
 
 ### Descrição das Camadas
@@ -94,9 +98,15 @@ Divide-se em módulos de contexto (ex: `accounts`, `contracts`, `fiscaliza`), ca
 Camada que conecta a aplicação ao mundo externo:
 
 - **HTTP**: Controladores e interceptors de rotas.
+  - **controllers**: Controladores organizados por contexto.
+    - **<contexto_de_negocio>**: Objetos de transferência de dados para validação e mapeamento.
+      - **DTOs**: Objetos de transferência de dados para validação e mapeamento.
+  - **presenters/**: Mapeamento de entidades para respostas HTTP.
+  - **interceptors/**: Interceptadores para manipulação respostas e erros.
 - **Configs**: Configurações globais (CORS, envs, logs, etc.).
 - **Events**: Implementações concretas de eventos e filas.
 - **Database**: Integração com Prisma ORM e configurações de persistência.
+  - **mapper/**: Mapeamento entre entidades de domínio e modelos de banco.
 
 ---
 
@@ -110,67 +120,33 @@ Camada que conecta a aplicação ao mundo externo:
 | **SOLID Principles**              | Código limpo, modular e extensível.                                                   |
 | **TDD (Test-Driven Development)** | Casos de uso e regras de negócio cobertos por testes desde o início.                  |
 | **DTOs (Data Transfer Objects)**  | Transferência de dados entre camadas com segurança e clareza.                         |
+| **Presenters**                    | Mapeamento de entidades para respostas HTTP.                                          |
 | **Functional Error Handling**     | Uso de `Either` para controle previsível de fluxos de sucesso e falha.                |
 | **CI/CD e Docker**                | Automação de integração e deploy, além de containerização completa.                   |
 
 Esses padrões visam garantir **qualidade, clareza e extensibilidade** do código em todos os projetos.
 
-```mermaid
-sequenceDiagram
-    title Comunicação entre camadas na arquitetura do Template API Nest
-
-    participant Client as 🧑‍💻 Cliente / Frontend
-    participant Controller as 🌐 Controller (Infra / HTTP)
-    participant UseCase as ⚙️ Use Case (Application)
-    participant Repository as 🗃️ Repository (Application)
-    participant Entity as 🧩 Entidade (Domain / Enterprise)
-    participant Database as 🗄️ Banco de Dados (Infra / Prisma)
-
-    %% Requisição HTTP
-    Client->>Controller: 1️⃣ Envia requisição HTTP (ex: POST /accounts)
-    Controller->>Controller: 2️⃣ Valida DTO (entrada)
-    Controller->>UseCase: 3️⃣ Executa caso de uso com dados validados
-
-    %% Camada de aplicação
-    UseCase->>Repository: 4️⃣ Solicita operação (ex: criar usuário)
-    Repository->>Entity: 5️⃣ Instancia entidade de domínio (ex: UserEntity)
-    Entity-->>Repository: 6️⃣ Retorna entidade validada
-    Repository->>Database: 7️⃣ Persiste dados (via Prisma ORM)
-    Database-->>Repository: 8️⃣ Retorna resultado da operação
-    Repository-->>UseCase: 9️⃣ Retorna sucesso ou erro (Either<Error, Entity>)
-
-    %% Retorno para o cliente
-    UseCase-->>Controller: 🔟 Retorna resultado (Either)
-    Controller->>Controller: 1️⃣1️⃣ Mapeia erro para HTTP (ex: 404, 409)
-    Controller-->>Client: 1️⃣2️⃣ Retorna resposta HTTP (status + payload)
-
-    %% Evento de domínio (opcional)
-    UseCase->>Entity: ⏺️ Emite Domain Event (ex: UserCreated)
-    Entity->>EventBus: ⏭️ Publica evento (Event-Driven Architecture)
-    EventBus->>Subscriber: ⏩ Subscriber reage ao evento (ex: envia e-mail)
-```
-
 ---
 
 ## 6. Pontos Positivos da Adoção
 
-✅ **Escalabilidade** – a separação de camadas e contextos permite que o sistema cresça de forma modular, sem acoplamento excessivo.
-✅ **Testabilidade** – cada caso de uso é isolado, facilitando testes unitários e integração contínua.
-✅ **Padronização** – todos os projetos compartilham a mesma estrutura e convenções, reduzindo curva de aprendizado.
-✅ **Evolutividade** – fácil adição de novos módulos, serviços e contextos de domínio.
-✅ **Clareza Arquitetural** – código mais previsível e de fácil leitura, mesmo por novos desenvolvedores.
-✅ **Aderência a Boas Práticas** – aplicação dos princípios SOLID e DDD de forma pragmática.
-✅ **Integração Simplificada com Microserviços** – devido ao uso de eventos e abstrações bem definidas.
+- ✅ **Escalabilidade** – a separação de camadas e contextos permite que o sistema cresça de forma modular, sem acoplamento excessivo.
+- ✅ **Testabilidade** – cada caso de uso é isolado, facilitando testes unitários e integração contínua.
+- ✅ **Padronização** – todos os projetos compartilham a mesma estrutura e convenções, reduzindo curva de aprendizado.
+- ✅ **Evolutividade** – fácil adição de novos módulos, serviços e contextos de domínio.
+- ✅ **Clareza Arquitetural** – código mais previsível e de fácil leitura, mesmo por novos desenvolvedores.
+- ✅ **Aderência a Boas Práticas** – aplicação dos princípios SOLID e DDD de forma pragmática.
+- ✅ **Integração Simplificada com Microserviços** – devido ao uso de eventos e abstrações bem definidas.
 
 ---
 
 ## 7. Pontos de Atenção / Desafios
 
-⚠️ **Curva de aprendizado inicial** – a aplicação de DDD e Clean Architecture pode ser complexa para desenvolvedores sem experiência nesses padrões.
-⚠️ **Sobrecarga para pequenos projetos** – para APIs simples, a separação de camadas pode parecer excessiva. (Recomenda-se a possibilidade de um template mais enxuto para esses casos, ex: Microservices).
-⚠️ **Necessidade de disciplina de equipe** – o padrão exige consistência na criação de módulos, casos de uso e repositórios.
-⚠️ **Custo inicial de setup** – a configuração completa de ambiente, testes e documentação demanda tempo inicial maior.
-⚠️ **Manutenção de múltiplos contextos** – exige atenção na definição de boundaries e dependências entre domínios.
+- ⚠️ **Curva de aprendizado inicial** – a aplicação de DDD e Clean Architecture pode ser complexa para desenvolvedores sem experiência nesses padrões.
+- ⚠️ **Sobrecarga para pequenos projetos** – para APIs simples, a separação de camadas pode parecer excessiva. (Recomenda-se a possibilidade de um template mais enxuto para esses casos, ex: Microservices).
+- ⚠️ **Necessidade de disciplina de equipe** – o padrão exige consistência na criação de módulos, casos de uso e repositórios.
+- ⚠️ **Custo inicial de setup** – a configuração completa de ambiente, testes e documentação demanda tempo inicial maior.
+- ⚠️ **Manutenção de múltiplos contextos** – exige atenção na definição de boundaries e dependências entre domínios.
 
 ---
 
