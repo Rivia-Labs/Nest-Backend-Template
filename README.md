@@ -115,7 +115,7 @@ Camada que conecta a aplicação ao mundo externo:
 
 Esses padrões visam garantir **qualidade, clareza e extensibilidade** do código em todos os projetos.
 
-```mmd
+```mermaid
 sequenceDiagram
     title Comunicação entre camadas na arquitetura do Template API Nest
 
