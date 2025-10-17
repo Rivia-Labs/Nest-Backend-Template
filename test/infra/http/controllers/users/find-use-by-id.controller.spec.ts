@@ -45,9 +45,10 @@ describe("UserController (Integration)", () => {
 		it("should return 404 when user is not found", async () => {
 			const response = await request(app.getHttpServer()).get(`/users/non-existing-id`).expect(404);
 			expect(response.body).toEqual({
+				causes: ["Usuário não cadastrado no sistema."],
+				timestamp: expect.any(String),
+				code: "RESOURCE_NOT_FOUND_ERROR",
 				message: "Usuário não encontrado!",
-				error: "RESOURCE_NOT_FOUND_ERROR",
-				statusCode: 404,
 			});
 		});
 	});

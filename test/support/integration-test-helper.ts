@@ -2,6 +2,7 @@ import type { INestApplication, Type } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 
 import { AppModule } from "@/app.module";
+import { configureError } from "@/infra/configs/error/error.config";
 import { PrismaClient } from "@/infra/database/prisma/generated/prisma/client";
 
 export interface IntegrationTestSetupWithDatabase {
@@ -36,7 +37,7 @@ export class IntegrationTestHelper {
 		}).compile();
 
 		const app = moduleFixture.createNestApplication();
-
+		configureError(app);
 		await app.init();
 
 		return { app };
@@ -48,7 +49,7 @@ export class IntegrationTestHelper {
 		}).compile();
 
 		const app = moduleFixture.createNestApplication();
-
+		configureError(app);
 		await app.init();
 
 		return app;

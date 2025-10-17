@@ -18,11 +18,9 @@ describe("FindUserByIdUseCase", () => {
 	});
 
 	it("should return ResourceNotFoundError when user does not exist", async () => {
-		const result = await sut.execute({ id: "non-existent-id" });
-
-		expect(result.failure()).toBe(true);
-		expect(result.success()).toBe(false);
-		expect(result.value).toBeInstanceOf(ResourceNotFoundError);
+		expect(async () => await sut.execute({ id: "non-existent-id" })).rejects.toThrow(
+			ResourceNotFoundError
+		);
 	});
 
 	it("should find a user by ID successfully", async () => {
@@ -37,34 +35,7 @@ describe("FindUserByIdUseCase", () => {
 
 		const result = await sut.execute({ id: user.id.toValue() });
 
-		expect(result.success()).toBe(true);
-		expect(result.value).toBeInstanceOf(UserEntity);
-		if (result.success()) {
-			expect(result.value.id.equals(user.id)).toBe(true);
-		}
-	});
-
-	it("should log messages during execution", async () => {
-		const loggerLogSpy = jest.spyOn(console, "log").mockImplementation(() => {});
-		const loggerWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
-
-		const customRepo = new InMemoryUserRepository();
-		const customUseCase = new FindUserByIdUseCase(customRepo);
-
-		// Teste do log de aviso (usuário não encontrado)
-		await customUseCase.execute({ id: "invalid-id" });
-
-		// Teste do log de sucesso (usuário encontrado)
-		const user = UserEntity.create({
-			email: Email.create("bob@example.com"),
-			name: "Bob",
-			age: 22,
-			status: UserStatus.create(UserStatusEnum.ACTIVE),
-		});
-		await customRepo.create(user);
-		await customUseCase.execute({ id: user.id.toString() });
-
-		loggerLogSpy.mockRestore();
-		loggerWarnSpy.mockRestore();
+		expect(result).toBeInstanceOf(UserEntity);
+		expect(result.id.equals(user.id)).toBe(true);
 	});
 });

@@ -26,9 +26,6 @@ export class FindUserByIdController {
 		const result = await this.findUserByIdUseCase.execute({
 			id,
 		});
-		if (result.success()) {
-			return UserPresenter.toHttp(result.value);
-		}
-		return result;
+		return UserPresenter.toHttp(result);
 	}
 }

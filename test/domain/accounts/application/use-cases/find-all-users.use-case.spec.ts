@@ -18,9 +18,7 @@ describe("FindAllUsersUseCase", () => {
 
 	it("should return an empty array when no users exist", async () => {
 		const result = await sut.execute();
-
-		expect(result.success()).toBe(true);
-		expect(result.value).toEqual([]);
+		expect(result).toEqual([]);
 	});
 
 	it("should find a list of users successfully", async () => {
@@ -35,8 +33,7 @@ describe("FindAllUsersUseCase", () => {
 
 		const result = await sut.execute();
 
-		expect(result.success()).toBe(true);
-		expect(result.value).toHaveLength(1);
-		expect(result.value).toContainEqual(expect.objectContaining({ id: user.id }));
+		expect(result).toHaveLength(1);
+		expect(result).toContainEqual(expect.objectContaining({ id: user.id }));
 	});
 });

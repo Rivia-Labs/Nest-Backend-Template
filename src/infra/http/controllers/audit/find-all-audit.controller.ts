@@ -21,8 +21,6 @@ export class FindAllAuditController {
 	public async execute() {
 		this.logger.log("Received request to find all audit records");
 		const result = await this.findAllAuditUseCase.execute();
-		if (result.success()) {
-			return AuditPresenter.toHttpList(result.value);
-		}
+		return AuditPresenter.toHttpList(result);
 	}
 }

@@ -1,4 +1,3 @@
-import { Either, failure, success } from "@/core/either";
 import { ValueObject } from "@/core/entities/value-object";
 import { InvalidEmailError } from "@/domain/accounts/application/use-cases/errors/invalid-email-error";
 
@@ -12,11 +11,11 @@ export class Email extends ValueObject<EmailVoProps> {
 	}
 
 	static create(email: string) {
-		return new Email({ email });
+		return new Email({ email: email.trim().toLowerCase() });
 	}
 
 	static validate(email: string): boolean {
-		if (!email || email.trim().length > 255) {
+		if (!email || email.length > 255) {
 			return false;
 		}
 
@@ -34,13 +33,13 @@ export class Email extends ValueObject<EmailVoProps> {
 		return email.trim().toLowerCase();
 	}
 
-	static createFromText(email: string): Either<InvalidEmailError, Email> {
-		if (!Email.validate(email)) {
-			return failure(new InvalidEmailError(email));
+	static createFromText(email: string): Email {
+		const emailFormatted = Email.format(email);
+
+		if (!Email.validate(emailFormatted)) {
+			throw new InvalidEmailError(emailFormatted);
 		}
 
-		const formattedEmail = Email.format(email);
-
-		return success(new Email({ email: formattedEmail }));
+		return new Email({ email: emailFormatted });
 	}
 }

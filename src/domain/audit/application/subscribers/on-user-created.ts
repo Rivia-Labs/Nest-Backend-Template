@@ -21,13 +21,10 @@ export class OnUserCreated implements EventHandler {
 
 	public async dispatchUserCreatedEvent({ user }: UserCreatedEvent) {
 		const action = Action.createFromString(ActionType.CREATE);
-		if (action.failure()) {
-			throw action.value;
-		}
 
 		const register = RegisterEntity.create({
 			userId: user.id,
-			action: action.value,
+			action: action,
 		});
 
 		await this.auditRepository.create(register);

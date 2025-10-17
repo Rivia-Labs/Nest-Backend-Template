@@ -1,11 +1,21 @@
-export abstract class DomainError extends Error {
-	public readonly code: string;
+import { HttpStatus } from "@nestjs/common";
 
-	constructor(message: string, code: string) {
-		super(message);
+interface Params {
+	code: string;
+	message: string;
+	status?: HttpStatus;
+	causes?: string[];
+}
 
-		this.code = code;
+export class DomainError extends Error {
+	readonly code: string;
+	readonly status: HttpStatus;
+	readonly causes: string[];
 
-		Error.captureStackTrace?.(this, this.constructor);
+	constructor(params: Params) {
+		super(params.message);
+		this.code = params.code;
+		this.causes = params.causes ?? [];
+		this.status = params.status ?? HttpStatus.BAD_REQUEST;
 	}
 }

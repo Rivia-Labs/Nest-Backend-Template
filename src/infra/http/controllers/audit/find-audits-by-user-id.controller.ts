@@ -26,9 +26,6 @@ export class FindAuditsByUserIdController {
 		const result = await this.findAuditByUserIdUseCase.execute({
 			userId: userId,
 		});
-		if (result.success()) {
-			return AuditPresenter.toHttpList(result.value);
-		}
-		return result;
+		return AuditPresenter.toHttpList(result);
 	}
 }

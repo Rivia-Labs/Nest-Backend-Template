@@ -14,12 +14,9 @@ type AuditPersistence = {
 export class AuditMapper {
 	public static toDomain(data: AuditPersistence): RegisterEntity {
 		const action = Action.createFromString(data.action);
-		if (action.failure()) {
-			throw new Error(`Invalid action type: ${data.action}`);
-		}
 		return RegisterEntity.create(
 			{
-				action: action.value,
+				action: action,
 				userId: new UUIDUniqueEntityId(data.userId),
 				createdAt: data.createdAt,
 				updatedAt: data.updatedAt,

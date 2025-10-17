@@ -1,8 +1,14 @@
+import { HttpStatus } from "@nestjs/common";
 import { DomainError } from "./domain-error";
 import { DomainCode } from "./enums/domain-code";
 
 export class ResourceNotFoundError extends DomainError {
-	constructor(resouce: string, code?: string) {
-		super(`${resouce} não encontrado!`, code ?? DomainCode.RESOURCE_NOT_FOUND_ERROR);
+	constructor(resource: string, code?: string) {
+		super({
+			message: `${resource} não encontrado!`,
+			code: code ?? DomainCode.RESOURCE_NOT_FOUND_ERROR,
+			status: HttpStatus.NOT_FOUND,
+			causes: [`${resource} não cadastrado no sistema.`],
+		});
 	}
 }

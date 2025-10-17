@@ -16,7 +16,7 @@
     "start:prod": "node dist/main",
     "lint": "biome lint --write .",
     "test": "jest --runInBand",
-    "test:unit": "jest --selectProjects unit",
+    "test:unit": "jest --selectProjects unit --runInBand",
     "test:integration": "jest --selectProjects integration --runInBand",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

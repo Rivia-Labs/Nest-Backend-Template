@@ -14,13 +14,12 @@ describe("FindAuditByUserIdUseCase", () => {
 		sut = new FindAuditByUserIdUseCase(repository);
 	});
 
-	it("should return an empty array when no audit records exist", async () => {
-		const result = await sut.execute({
-			userId: new UUIDUniqueEntityId().toValue(),
-		});
-
-		expect(result.success()).toBe(false);
-		expect(result.value).toBeInstanceOf(ResourceNotFoundError);
+	it("should throw a ResourceNotFoundError when no audit records exist", async () => {
+		await expect(
+			sut.execute({
+				userId: new UUIDUniqueEntityId().toValue(),
+			})
+		).rejects.toBeInstanceOf(ResourceNotFoundError);
 	});
 
 	it("should find a list of users successfully", async () => {
@@ -34,8 +33,6 @@ describe("FindAuditByUserIdUseCase", () => {
 		const result = await sut.execute({
 			userId: register.props.userId.toValue(),
 		});
-
-		expect(result.success()).toBe(true);
-		expect(result.value).toHaveLength(1);
+		expect(result).toHaveLength(1);
 	});
 });

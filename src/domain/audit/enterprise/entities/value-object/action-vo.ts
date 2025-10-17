@@ -1,4 +1,3 @@
-import { Either, failure, success } from "@/core/either";
 import { ValueObject } from "@/core/entities/value-object";
 import { InvalidActionError } from "@/domain/audit/application/use-cases/errors/invalid-action-error";
 
@@ -22,11 +21,11 @@ export class Action extends ValueObject<{ type: ActionType }> {
 		return Object.values(ActionType).includes(action as ActionType);
 	}
 
-	static createFromString(action: string): Either<InvalidActionError, Action> {
+	static createFromString(action: string): Action {
 		if (!this.isValid(action)) {
-			return failure(new InvalidActionError(action));
+			throw new InvalidActionError(action);
 		}
 
-		return success(new Action({ type: action as ActionType }));
+		return new Action({ type: action as ActionType });
 	}
 }

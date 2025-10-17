@@ -16,13 +16,12 @@ describe("CreateUserUseCase", () => {
 	});
 
 	it("should not create user with invalid email", async () => {
-		const result = await sut.execute({
-			email: "invalid-email",
-			name: "John Doe",
-		});
-
-		expect(result.failure()).toBe(true);
-		expect(result.value).toBeInstanceOf(InvalidEmailError);
+		await expect(
+			sut.execute({
+				email: "invalid-email",
+				name: "John Doe",
+			})
+		).rejects.toThrow(InvalidEmailError);
 	});
 
 	it("should not create user if already exists", async () => {
@@ -30,18 +29,18 @@ describe("CreateUserUseCase", () => {
 			email: Email.create("john@example.com"),
 			name: "John",
 			age: 30,
-			status: { value: UserStatusEnum.ACTIVE } as any, // mock VO
+			status: { value: UserStatusEnum.ACTIVE } as any,
 		});
 
 		await repository.create(existingUser);
 
-		const result = await sut.execute({
-			email: "john@example.com",
-			name: "John Doe",
-		});
-
-		expect(result.failure()).toBe(true);
-		expect(result.value).toBeInstanceOf(ResourceAlreadyExistsError);
+		expect(
+			async () =>
+				await sut.execute({
+					email: "john@example.com",
+					name: "John Doe",
+				})
+		).rejects.toThrow(ResourceAlreadyExistsError);
 	});
 
 	it("should create a new user successfully", async () => {
@@ -51,8 +50,9 @@ describe("CreateUserUseCase", () => {
 			age: 25,
 		});
 
-		expect(result.success()).toBe(true);
-		expect(result.value).toBeNull();
+		expect(result).toEqual({
+			id: expect.any(String),
+		});
 
 		const allUsers = await repository.findAll();
 		expect(allUsers).toHaveLength(1);

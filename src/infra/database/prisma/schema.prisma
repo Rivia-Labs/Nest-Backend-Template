@@ -24,11 +24,11 @@ model User {
 model Audit {
   id        Int      @id @default(autoincrement())
   action    String   @db.VarChar(100)
-  userId    String   @map("user_id") @db.VarChar(100)
+  userId    String?  @map("user_id") @db.VarChar(100)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user User @relation(fields: [userId], references: [id], onDelete: SetNull)
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@map("audits")
 }

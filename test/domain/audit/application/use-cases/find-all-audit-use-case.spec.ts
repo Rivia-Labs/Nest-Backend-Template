@@ -15,9 +15,7 @@ describe("FindAllAuditUseCase", () => {
 
 	it("should return an empty array when no audit records exist", async () => {
 		const result = await sut.execute();
-
-		expect(result.success()).toBe(true);
-		expect(result.value).toEqual([]);
+		expect(result).toEqual([]);
 	});
 
 	it("should find a list of users successfully", async () => {
@@ -29,8 +27,6 @@ describe("FindAllAuditUseCase", () => {
 		await repository.create(register);
 
 		const result = await sut.execute();
-
-		expect(result.success()).toBe(true);
-		expect(result.value).toHaveLength(1);
+		expect(result).toHaveLength(1);
 	});
 });

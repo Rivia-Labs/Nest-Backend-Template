@@ -17,8 +17,6 @@ export class FindAllUsersController {
 	public async execute() {
 		this.logger.log("Received request to find all users");
 		const result = await this.findAllUsersUseCase.execute();
-		if (result.success()) {
-			return UserPresenter.toHttpList(result.value);
-		}
+		return UserPresenter.toHttpList(result);
 	}
 }
