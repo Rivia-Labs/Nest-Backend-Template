@@ -69,4 +69,4 @@ COPY --from=production /usr/src/app/prisma ./prisma
 EXPOSE 3333
 ENV PORT=3333
 
-CMD ["pnpm", "run", "start:prod"]
+CMD ["pnpm", "start:prod"]
