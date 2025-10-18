@@ -1,8 +1,8 @@
 import { Controller, Get, HttpStatus, Logger } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { FindAllUsersUseCase } from "@/domain/accounts/application/use-cases/find-all-users.use-case";
-import { UserPresenter } from "../../presenters/user-presenter";
-import { UserResponseScalar } from "./dtos/user-reponse-scalar";
+import { UserPresenter } from "./presenters/user-presenter";
+import { UserResponseScalar } from "./presenters/user-reponse-scalar";
 
 @ApiTags("Users")
 @Controller("users")

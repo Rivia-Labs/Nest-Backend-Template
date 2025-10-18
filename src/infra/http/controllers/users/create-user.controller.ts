@@ -19,14 +19,22 @@ export class CreateUserController {
 	@ErrorResponseScalar({
 		status: HttpStatus.BAD_REQUEST,
 		description: "Dados inválidos",
-		message: "Validation failed",
-		error: "ZodValidationError",
+		example: {
+			code: "ERR_INVALID_REQUEST_DATA",
+			message: "Dados de requisição inválidos",
+			causes: ["O campo 'email' é obrigatório", "O campo 'age' deve ser um número positivo"],
+			timestamp: new Date(),
+		},
 	})
 	@ErrorResponseScalar({
 		status: HttpStatus.CONFLICT,
 		description: "Dados em conflito",
-		message: "Usuário com esse email já existe",
-		error: DomainCode.RESOURCE_ALREADY_EXISTS_ERROR,
+		example: {
+			code: DomainCode.RESOURCE_ALREADY_EXISTS_ERROR,
+			message: "Usuário com esse email já existe",
+			causes: ["Um usuário com o email 'joedoe@example.com' já está cadastrado"],
+			timestamp: new Date(),
+		},
 	})
 	public async execute(@Body(new ZodValidationPipe(createUserBodySchema)) body: CreateUserBodyDto) {
 		this.logger.log("Received request to create a new user");

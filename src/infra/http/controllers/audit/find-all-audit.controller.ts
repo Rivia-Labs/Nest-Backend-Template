@@ -1,8 +1,8 @@
 import { Controller, Get, HttpStatus, Logger } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { FindAllAuditUseCase } from "@/domain/audit/application/use-cases/find-all-audit-use-case";
-import { AuditPresenter } from "../../presenters/audit-presenter";
-import { AuditResponseScalar } from "./dtos/audit-resonse-scalar";
+import { AuditPresenter } from "./presenters/audit-presenter";
+import { AuditResponseScalar } from "./presenters/audit-response-scalar";
 
 @ApiTags("Audits")
 @Controller("audits")

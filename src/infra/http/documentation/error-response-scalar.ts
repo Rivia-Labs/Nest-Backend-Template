@@ -1,26 +1,20 @@
 import { applyDecorators, HttpStatus } from "@nestjs/common";
-import { ApiResponse } from "@nestjs/swagger";
+import { ApiExtraModels, ApiResponse } from "@nestjs/swagger";
+import { ErrorResponse } from "@/infra/configs/error/responses/error.response";
 
-type ErrorResponseOptions = {
+type ErrorResponseScalarOptions = {
 	status: HttpStatus;
 	description: string;
-	message: string;
-	error: string;
+	example: ErrorResponse;
 };
 
-export function ErrorResponseScalar({ status, description, message, error }: ErrorResponseOptions) {
+export function ErrorResponseScalar({ status, description, example }: ErrorResponseScalarOptions) {
 	return applyDecorators(
+		ApiExtraModels(ErrorResponse),
 		ApiResponse({
 			status,
 			description,
-			schema: {
-				type: "object",
-				properties: {
-					statusCode: { type: "integer", example: status },
-					error: { type: "string", example: error },
-					message: { type: "string", example: message },
-				},
-			},
+			example,
 		})
 	);
 }
